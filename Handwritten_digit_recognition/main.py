@@ -1,5 +1,5 @@
-import os , time
-
+import os
+import time
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
@@ -53,7 +53,6 @@ def mouse_event(event, x, y, flags, param):
     # 左鍵按下：開始畫圖
     if event == 1:
         drawing = True
-        start = (x, y)
     # 滑鼠移動，畫圖
     elif event == cv2.EVENT_MOUSEMOVE:
         if drawing:
