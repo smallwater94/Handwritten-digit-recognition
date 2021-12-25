@@ -5,7 +5,7 @@ from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.layers import Flatten, Conv2D, MaxPooling2D  # new!
+from tensorflow.keras.layers import Flatten, Conv2D, MaxPooling2D
 
 import cv2
 import numpy as np
@@ -31,17 +31,17 @@ model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(n_classes, activation='softmax'))
 
-filepath = './keras_model.h5'
+filepath = './model/keras_model.h5'
 if os.path.isfile(filepath):
     print("找到模型。")
-    reload_model = tf.keras.models.load_model('./keras_model.h5')
+    reload_model = tf.keras.models.load_model(filepath)
 else:
     print("沒找到模型，開始訓練。")
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     model.fit(X_train, y_train, batch_size=128, epochs=10, verbose=1, validation_data=(X_test, y_test))
-    model.save('./keras_model.h5')
-    time.sleep(1)
-    reload_model = tf.keras.models.load_model('./keras_model.h5')
+    model.save(filepath)
+    time.sleep(5)
+    reload_model = tf.keras.models.load_model(filepath)
 
 drawing = False  # 是否開始畫圖
 
