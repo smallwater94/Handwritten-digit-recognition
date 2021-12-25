@@ -12,7 +12,6 @@ from skimage.transform import resize
 import numpy as np
 import cv2
 
-
 os.environ["CUDA_VISIBLE_DEVICES"] = '-1'
 
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
