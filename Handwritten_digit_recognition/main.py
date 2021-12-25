@@ -1,5 +1,6 @@
 import os
 import time
+
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
@@ -7,9 +8,10 @@ from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.layers import Flatten, Conv2D, MaxPooling2D
 
-import cv2
-import numpy as np
 from skimage.transform import resize
+import numpy as np
+import cv2
+
 
 os.environ["CUDA_VISIBLE_DEVICES"] = '-1'
 
