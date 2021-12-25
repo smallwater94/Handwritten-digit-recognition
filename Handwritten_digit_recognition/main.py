@@ -64,14 +64,16 @@ def mouse_event(event, x, y, flags, param):
         drawing = False
 
 
-img_main = np.zeros((800, 560, 3), np.uint8)
+img_main = np.zeros((750, 560, 3), np.uint8)
 img_draw = img_main[100:660, 0:560]
 cv2.rectangle(img_main, (0, 0), (560, 100), (125, 125, 125), -1)
 cv2.rectangle(img_main, (0, 100), (560, 660), (255, 255, 255), -1)
 cv2.rectangle(img_main, (0, 660), (560, 800), (125, 125, 125), -1)
 
-title_text = 'Handwritten digit recognition'
-cv2.putText(img_main, title_text, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2, cv2.LINE_AA)
+title_text_1 = 'Handwritten digit recognition'
+title_text_2 = 'R for clear canvas , Q for Quit'
+cv2.putText(img_main, title_text_1, (5, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (0, 0, 0), 2, cv2.LINE_AA)
+cv2.putText(img_main, title_text_2, (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
 
 while True:
     cv2.namedWindow('image')
@@ -79,18 +81,24 @@ while True:
     cv2.imshow('image', img_main)
     image = cv2.resize(img_draw, (28, 28), interpolation=cv2.INTER_AREA)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # 灰階
-    cv2.imshow('image2', image)
+    #  cv2.imshow('image2', image)
     image_resized = resize(image, (28, 28), anti_aliasing=True)
     X1 = image_resized.reshape(1, 28, 28)  # / 255
     X1 = np.abs(1 - X1)
     predictions = reload_model.predict(X1)
     pre_num = np.argmax(predictions[0])
     pre_pro = predictions[0, pre_num]
-    pre_pro = round(pre_pro, 4)
+    pre_pro = pre_pro * 100
+    pre_pro = round(pre_pro, 3)
+
+    cv2.rectangle(img_main, (0, 660), (560, 800), (125, 125, 125), -1)
     print(pre_num, pre_pro)
+
+    pre_text = f" This number have {pre_pro} % is number {pre_num}."
+    cv2.putText(img_main, pre_text, (0, 700), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2, cv2.LINE_AA)
 
     if cv2.waitKey(1) == ord('r'):
         cv2.rectangle(img_main, (0, 100), (560, 660), (255, 255, 255), -1)
 
-    if cv2.waitKey(1) == 27:
+    if cv2.waitKey(1) == ord('q'):
         break
